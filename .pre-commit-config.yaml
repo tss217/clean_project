@@ -1,22 +1,22 @@
 repos:
-  - repo: local
+  - repo: local #hook from project
     hooks:
       - id: pylint
         name: pylint
-        entry: pylint
-        language: system
-        types: [python]
+        entry: pylint #command to run
+        language: system #uses the venv
+        types: [python] #only .py files
         args:
           - -rn
           - -sn
-          - --rcfile=.pylintrc
+          - --rcfile=.pylintrc  #uses the personalized config
           - --load-plugins=pylint.extensions.docparams
 
   - repo: local
     hooks:
       - id: requirements
         name: Generate requirements.txt
-        entry: bash -c 'venv/bin/pip3 freeze > requirements.txt'
+        entry: bash -c 'venv/bin/pip3 freeze > requirements.txt' #mkdir requirements
         language: system
         pass_filenames: false
-        stages: [commit]
+        stages: [commit] #command trigger
