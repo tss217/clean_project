@@ -1,3 +1,4 @@
+from typing import Any
 from src.infra.db.settings.conection import DBConnectionHaandler
 from src.infra.db.entities.users import Users as UsersEntity
 
@@ -14,4 +15,17 @@ class UsersRepository:
             except Exception as exception:
                 assert databse.session is not None
                 databse.session.rollback()
+                raise exception
+    
+    @classmethod
+    def select_user(cls, first_name:str)->Any:
+        with DBConnectionHaandler() as database:
+            try:
+                assert database.session is not None
+                users = (database.session.query(UsersEntity).filter(UsersEntity.first_name == first_name).all())
+                return users
+            
+            except Exception as exception:
+                assert database.session is not None
+                database.session.rollback()
                 raise exception
